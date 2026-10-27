@@ -235,7 +235,7 @@ async function loadBoard(force){
   rows.forEach(r=>{if(bg!=="all"&&r.g!==bg)return;const k=r.n.toLowerCase();best[k]=best[k]||{n:r.n,g:{}};best[k].g[r.g]=Math.max(best[k].g[r.g]||0,r.s)});
   const list=Object.values(best).map(p=>({n:p.n,s:Object.values(p.g).reduce((a,b)=>a+b,0)})).sort((a,b)=>b.s-a.s).slice(0,10);
   $("lb").replaceChildren(...(list.length?list.map(p=>{const li=el("li");li.append(el("b","",p.n),el("span","",p.s+" pts"));return li}):[el("li","","No scores yet. Be the first.")]));
-  $("mode").textContent=API_URL?"Shared leaderboard from all devices. Best score per game, added up. Refreshes automatically.":"This device only. Connect the Apps Script to share scores between devices.";
+  $("mode").textContent=API_URL?"Shared leaderboard from all devices. Best score per game, added up. Refreshes automatically.":"This device only";
 }
 setInterval(()=>{if(!document.hidden)loadBoard()},120000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadBoard()});
