@@ -73,8 +73,15 @@ h2{font:400 clamp(2.4rem,7vw,4.2rem)/1 var(--display);color:var(--lime);letter-s
 .bubble{position:relative;background:var(--paper);color:var(--ink);border:4px solid #000;padding:24px 26px;max-width:640px;box-shadow:7px 7px 0 var(--purple);font-weight:700;font-size:1.2rem}
 .bubble strong{background:var(--lime);padding:0 .3em}
 .links{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
-.links a{font:400 1.6rem/1 var(--display);letter-spacing:.04em;text-decoration:none;background:var(--purple);color:#fff;padding:.55em 1em;border:3px solid #000;box-shadow:4px 4px 0 var(--lime)}
-.links a:hover{transform:translate(-2px,-2px) rotate(-1deg)}
+.links a{display:inline-flex;align-items:center;gap:.5em;font:400 1.7rem/1 var(--display);letter-spacing:.04em;text-decoration:none;padding:.5em 1em .5em .8em;border:3px solid #000;box-shadow:5px 5px 0 #000;transition:transform .15s,box-shadow .15s}
+.links a svg{width:1.3em;height:1.3em;flex:none}
+.links a:nth-child(1){background:var(--lime);color:var(--ink);transform:rotate(-2deg);box-shadow:5px 5px 0 var(--purple)}
+.links a:nth-child(2){background:var(--purple);color:#fff;transform:rotate(1.5deg);box-shadow:5px 5px 0 var(--lime)}
+.links a:nth-child(3){background:var(--paper);color:var(--ink);transform:rotate(-1deg);box-shadow:5px 5px 0 var(--purple)}
+.links a:nth-child(4){background:var(--ink);color:var(--lime);border-color:var(--lime);transform:rotate(2deg);box-shadow:5px 5px 0 var(--purple)}
+.links a:hover{transform:translate(-3px,-3px) rotate(0deg);box-shadow:8px 8px 0 #000}
+.links a:nth-child(odd):hover{box-shadow:8px 8px 0 var(--purple)}
+.links a:nth-child(even):hover{box-shadow:8px 8px 0 var(--lime)}
 footer{padding:30px 0 50px;text-align:center;opacity:.75;font-weight:700}
 
 @media(max-width:620px){
@@ -133,7 +140,13 @@ footer{padding:30px 0 50px;text-align:center;opacity:.75;font-weight:700}
 <script>
 /* ===== EDIT ME ===== */
 const HANDLE = "@ogadigz";
-const LINKS = { Instagram: "", TikTok: "", X: "" }; /* paste full URLs; empty ones are hidden */
+const LINKS = { Instagram: "", TikTok: "", X: "", Discord: "" }; /* paste full URLs, e.g. https://instagram.com/ogadigz */
+const ICONS = {
+  Instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="17.3" cy="6.7" r="1.4" fill="currentColor"/></svg>',
+  TikTok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 2.6-2.6c.27 0 .53.04.77.12V9.66a5.7 5.7 0 0 0-.77-.05 5.7 5.7 0 1 0 5.69 5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.3 4.3 0 0 1-3.25-1.48z"/></svg>',
+  X: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+  Discord: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.32 4.37A19.8 19.8 0 0 0 15.43 2.85a.07.07 0 0 0-.08.04c-.21.38-.44.87-.6 1.26a18.3 18.3 0 0 0-5.5 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04A19.74 19.74 0 0 0 3.68 4.37a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.05 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.29a.07.07 0 0 1 .08-.01c3.93 1.8 8.18 1.8 12.07 0a.07.07 0 0 1 .08.01c.12.1.24.2.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.1c.36.7.77 1.37 1.23 2a.08.08 0 0 0 .08.03 19.84 19.84 0 0 0 6-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.09 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.09 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg>'
+};
 const QUESTIONS = [
   ["Would you rather","Never charge your phone again","Never lose WiFi again"],
   ["Would you rather","Lose all your photos","Lose all your contacts"],
@@ -202,9 +215,15 @@ $("optB").onclick = () => choose("B");
 $("handle").textContent = HANDLE;
 
 const linksEl = $("links");
-const live = Object.entries(LINKS).filter(([,u])=>u);
-if(live.length){ live.forEach(([n,u])=>{const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";a.textContent=n;linksEl.appendChild(a);}); }
-else { linksEl.textContent = "Follow " + HANDLE + " on social."; }
+Object.entries(LINKS).forEach(([name,url])=>{
+  const a = document.createElement("a");
+  a.href = url || "#";
+  if(url){ a.target = "_blank"; a.rel = "noopener"; }
+  else { a.addEventListener("click", e => e.preventDefault()); a.title = "Link coming soon"; }
+  a.setAttribute("aria-label", name);
+  a.innerHTML = ICONS[name] + "<span>" + name + "</span>";
+  linksEl.appendChild(a);
+});
 
 render();
 </script>
