@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ogadigz | social games</title>
+<meta name="description" content="Would you rather, this or that and hot takes. Pick a side, start a fight.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Archivo:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--lime:#C6FF3B;--ink:#101010;--purple:#8A3FFC;--paper:#F5F3EE;
+--display:"Bangers","Impact","Arial Black",sans-serif;--body:"Archivo","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--paper);font:500 1.05rem/1.5 var(--body);overflow-x:hidden;
+background-image:radial-gradient(rgba(138,63,252,.22) 1.5px,transparent 1.6px);background-size:18px 18px}
+a{color:inherit}
+:focus-visible{outline:4px solid var(--lime);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* hero */
+.hero{padding:clamp(40px,9vw,90px) 0 30px;text-align:center;position:relative}
+h1{font:400 clamp(4.2rem,21vw,13rem)/.9 var(--display);color:var(--lime);letter-spacing:.01em;
+text-shadow:.04em .04em 0 var(--purple),.08em .08em 0 #000;display:flex;justify-content:center;flex-wrap:wrap}
+h1 span{display:inline-block;animation:pop .6s cubic-bezier(.2,1.6,.4,1) both}
+h1 span:nth-child(1){transform:rotate(-6deg);animation-delay:.05s}
+h1 span:nth-child(2){transform:rotate(4deg) translateY(-.05em);animation-delay:.12s}
+h1 span:nth-child(3){transform:rotate(-3deg);animation-delay:.19s}
+h1 span:nth-child(4){transform:rotate(7deg) translateY(.04em);animation-delay:.26s}
+h1 span:nth-child(5){transform:rotate(-5deg);animation-delay:.33s}
+h1 span:nth-child(6){transform:rotate(3deg) translateY(-.06em);animation-delay:.4s}
+h1 span:nth-child(7){transform:rotate(-7deg);animation-delay:.47s}
+@keyframes pop{from{opacity:0;transform:scale(.2) rotate(30deg)}}
+.tag{display:inline-block;margin-top:22px;background:var(--purple);color:#fff;font:400 clamp(1.3rem,4vw,2rem)/1 var(--display);
+padding:.35em .8em;border:3px solid #000;box-shadow:5px 5px 0 var(--lime);transform:rotate(-2deg);letter-spacing:.04em}
+.doodle{position:absolute;pointer-events:none}
+.d1{left:2%;top:14%;width:clamp(44px,8vw,90px);transform:rotate(-14deg)}
+.d2{right:3%;top:10%;width:clamp(44px,8vw,90px);transform:rotate(12deg)}
+.d3{right:8%;bottom:6%;width:clamp(60px,11vw,130px)}
+.d4{left:7%;bottom:4%;width:clamp(50px,9vw,110px)}
+
+/* game */
+.game{padding:30px 0 60px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.kind{font:400 1.5rem/1 var(--display);background:var(--lime);color:var(--ink);padding:.3em .7em;border:3px solid #000;box-shadow:4px 4px 0 var(--purple);transform:rotate(1.5deg);letter-spacing:.04em}
+.count{font-weight:700}
+.q{font:400 clamp(2.4rem,8vw,5rem)/1 var(--display);text-align:center;margin:10px 0 28px;letter-spacing:.02em;text-wrap:balance}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.opt{position:relative;cursor:pointer;border:4px solid #000;padding:clamp(18px,4vw,34px) 18px;min-height:170px;display:flex;align-items:center;justify-content:center;
+text-align:center;font:400 clamp(1.7rem,5vw,3rem)/1.05 var(--display);letter-spacing:.03em;box-shadow:7px 7px 0 #000;color:inherit;transition:transform .15s,box-shadow .15s,opacity .2s}
+.opt:hover:not(:disabled){transform:translate(-3px,-3px) rotate(-.6deg);box-shadow:10px 10px 0 #000}
+.opt:active:not(:disabled){transform:translate(4px,4px);box-shadow:2px 2px 0 #000}
+.a{background:var(--lime);color:var(--ink)}
+.b{background:var(--purple);color:#fff}
+.opt:disabled{cursor:default}
+.opt.lost{opacity:.4;transform:scale(.97);box-shadow:3px 3px 0 #000}
+.opt.won{animation:slam .35s cubic-bezier(.2,1.8,.4,1)}
+@keyframes slam{from{transform:scale(.9) rotate(-3deg)}}
+.pick{position:absolute;top:-16px;right:-10px;background:var(--paper);color:var(--ink);font:400 1.3rem/1 var(--display);padding:.3em .6em;border:3px solid #000;transform:rotate(8deg)}
+.vs{display:none}
+.after{margin-top:26px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;min-height:58px}
+.btn{font:400 1.5rem/1 var(--display);letter-spacing:.04em;padding:.6em 1.1em;border:3px solid #000;background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--purple)}
+.btn:hover{transform:translate(-2px,-2px)}
+.btn.go{background:var(--lime)}
+.note{text-align:center;margin-top:14px;min-height:1.5em;opacity:.8}
+
+/* sections */
+section.block{padding:50px 0;border-top:4px dashed var(--purple)}
+h2{font:400 clamp(2.4rem,7vw,4.2rem)/1 var(--display);color:var(--lime);letter-spacing:.02em;margin-bottom:14px;text-shadow:3px 3px 0 var(--purple)}
+.bubble{position:relative;background:var(--paper);color:var(--ink);border:4px solid #000;padding:24px 26px;max-width:640px;box-shadow:7px 7px 0 var(--purple);font-weight:700;font-size:1.2rem}
+.bubble strong{background:var(--lime);padding:0 .3em}
+.links{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
+.links a{font:400 1.6rem/1 var(--display);letter-spacing:.04em;text-decoration:none;background:var(--purple);color:#fff;padding:.55em 1em;border:3px solid #000;box-shadow:4px 4px 0 var(--lime)}
+.links a:hover{transform:translate(-2px,-2px) rotate(-1deg)}
+footer{padding:30px 0 50px;text-align:center;opacity:.75;font-weight:700}
+
+@media(max-width:620px){
+ .opts{grid-template-columns:1fr}
+ .opt{min-height:120px}
+ .d3,.d4{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="doodle d1" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4l13 31 33 3-25 22 8 33-29-18-29 18 8-33L4 38l33-3z" fill="#C6FF3B" stroke="#000" stroke-width="5" stroke-linejoin="round"/></svg>
+  <svg class="doodle d2" viewBox="0 0 100 100" aria-hidden="true"><path d="M58 2L18 56h26l-8 42 46-58H52z" fill="#8A3FFC" stroke="#000" stroke-width="5" stroke-linejoin="round"/></svg>
+  <svg class="doodle d3" viewBox="0 0 140 60" aria-hidden="true"><path d="M4 30q14-28 28 0t28 0 28 0 28 0" fill="none" stroke="#C6FF3B" stroke-width="9" stroke-linecap="round"/></svg>
+  <svg class="doodle d4" viewBox="0 0 120 80" aria-hidden="true"><path d="M6 66C30 60 60 50 98 14M98 14l-32 4M98 14l-6 30" fill="none" stroke="#8A3FFC" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div class="wrap">
+    <h1 aria-label="ogadigz"><span>o</span><span>g</span><span>a</span><span>d</span><span>i</span><span>g</span><span>z</span></h1>
+    <p class="tag">Pick a side. Start a fight.</p>
+  </div>
+</header>
+
+<main>
+<section class="game wrap" aria-labelledby="qtext">
+  <div class="bar">
+    <span class="kind" id="kind"></span>
+    <span class="count" id="count"></span>
+  </div>
+  <h2 class="q" id="qtext" style="text-shadow:none;color:var(--paper)" aria-live="polite"></h2>
+  <div class="opts">
+    <button class="opt a" id="optA" type="button"></button>
+    <button class="opt b" id="optB" type="button"></button>
+  </div>
+  <div class="after" id="after"></div>
+  <p class="note" id="note"></p>
+</section>
+
+<section class="block" id="submit">
+  <div class="wrap">
+    <h2>Got a question?</h2>
+    <div class="bubble">Got a question that will start a fight in the group chat? Send it to <strong id="handle">@ogadigz</strong> and we might post it.</div>
+  </div>
+</section>
+
+<section class="block" id="follow">
+  <div class="wrap">
+    <h2>Find us</h2>
+    <div class="links" id="links"></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">ogadigz. Games for your group chat.</div></footer>
+
+<script>
+/* ===== EDIT ME ===== */
+const HANDLE = "@ogadigz";
+const LINKS = { Instagram: "", TikTok: "", X: "" }; /* paste full URLs; empty ones are hidden */
+const QUESTIONS = [
+  ["Would you rather","Never charge your phone again","Never lose WiFi again"],
+  ["Would you rather","Lose all your photos","Lose all your contacts"],
+  ["Would you rather","Be famous and broke","Be rich and unknown"],
+  ["Would you rather","Your search history goes public","Your voice notes go public"],
+  ["Would you rather","Skip every ad forever","Skip every queue forever"],
+  ["Would you rather","Know when you will die","Know how you will die"],
+  ["Would you rather","Your group chat sees your screen for a day","Your boss reads your DMs for a day"],
+  ["Would you rather","Always be 10 minutes late","Always be 20 minutes early"],
+  ["Would you rather","Delete one social app forever","Keep them all with zero notifications"],
+  ["This or that","Text","Call"],
+  ["This or that","Night owl","Early bird"],
+  ["This or that","Voice note","Typing"],
+  ["This or that","Sweet","Savoury"]
+];
+/* ==================== */
+
+const $ = id => document.getElementById(id);
+const store = { get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}} };
+
+let order = QUESTIONS.map((_,i)=>i).sort(()=>Math.random()-.5);
+let pos = 0, answered = store.get("ogd_answered",0), locked = false;
+
+function render(){
+  const [kind,a,b] = QUESTIONS[order[pos]];
+  locked = false;
+  $("kind").textContent = kind;
+  $("qtext").textContent = kind === "This or that" ? "This or that?" : "Would you rather...";
+  const A = $("optA"), B = $("optB");
+  [A,B].forEach(el=>{el.disabled=false;el.className="opt "+(el===A?"a":"b")});
+  A.textContent = a; B.textContent = b;
+  $("after").innerHTML = ""; $("note").textContent = "";
+  $("count").textContent = answered ? "You have answered " + answered : "Tap one to play";
+}
+
+function choose(side){
+  if(locked) return; locked = true;
+  const A = $("optA"), B = $("optB");
+  const win = side==="A"?A:B, lose = side==="A"?B:A;
+  A.disabled = B.disabled = true;
+  win.classList.add("won"); lose.classList.add("lost");
+  const s = document.createElement("span"); s.className="pick"; s.textContent="YOUR PICK"; win.appendChild(s);
+  answered++; store.set("ogd_answered",answered);
+  $("count").textContent = "You have answered " + answered;
+  const next = document.createElement("button"); next.className="btn go"; next.type="button"; next.textContent="Next question";
+  next.onclick = () => { pos = (pos+1) % order.length; if(pos===0) order.sort(()=>Math.random()-.5); render(); $("optA").focus(); };
+  const share = document.createElement("button"); share.className="btn"; share.type="button"; share.textContent="Share this";
+  share.onclick = () => shareIt(side);
+  $("after").append(next, share);
+  next.focus();
+}
+
+async function shareIt(side){
+  const [kind,a,b] = QUESTIONS[order[pos]];
+  const mine = side==="A"?a:b;
+  const text = (kind==="This or that" ? "This or that: " + a + " or " + b : "Would you rather " + a + " or " + b) + "? I picked: " + mine + ". What about you? " + HANDLE;
+  try{
+    if(navigator.share){ await navigator.share({text}); return; }
+    await navigator.clipboard.writeText(text);
+    $("note").textContent = "Copied. Paste it into your group chat.";
+  }catch(e){ $("note").textContent = text; }
+}
+
+$("optA").onclick = () => choose("A");
+$("optB").onclick = () => choose("B");
+$("handle").textContent = HANDLE;
+
+const linksEl = $("links");
+const live = Object.entries(LINKS).filter(([,u])=>u);
+if(live.length){ live.forEach(([n,u])=>{const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";a.textContent=n;linksEl.appendChild(a);}); }
+else { linksEl.textContent = "Follow " + HANDLE + " on social."; }
+
+render();
+</script>
+</body>
+</html>
